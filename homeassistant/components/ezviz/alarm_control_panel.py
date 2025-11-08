@@ -7,7 +7,7 @@ from datetime import timedelta
 import logging
 
 from pyezvizapi import PyEzvizError
-from pyezvizapi.constants import DefenseModeType
+from pyezvizapi.constants import DefenseModeType, DeviceCatagories
 
 from homeassistant.components.alarm_control_panel import (
     AlarmControlPanelEntity,
@@ -54,6 +54,16 @@ async def async_setup_entry(
 ) -> None:
     """Set up Ezviz alarm control panel."""
     coordinator = entry.runtime_data
+
+    # Only create alarm for camera devices, not smart plugs or other common devices
+    has_camera_device = any(
+        device.get("device_category")
+        not in (DeviceCatagories.COMMON_DEVICE_CATEGORY.value, None)
+        for device in coordinator.data.values()
+    )
+
+    if not has_camera_device:
+        return
 
     device_info = DeviceInfo(
         identifiers={(DOMAIN, entry.unique_id)},  # type: ignore[arg-type]
