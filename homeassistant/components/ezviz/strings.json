@@ -180,6 +180,9 @@
       "pir_motion_activated_light": {
         "name": "PIR motion activated light"
       },
+      "plug": {
+        "name": "Plug"
+      },
       "tamper_alarm": {
         "name": "Tamper alarm"
       },

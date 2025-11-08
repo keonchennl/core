@@ -41,6 +41,12 @@ SWITCH_TYPES: dict[int, EzvizSwitchEntityDescription] = {
         device_class=SwitchDeviceClass.SWITCH,
         supported_ext=str(SupportExt.SupportPtzPrivacy.value),
     ),
+    14: EzvizSwitchEntityDescription(
+        key="14",
+        translation_key="plug",
+        device_class=SwitchDeviceClass.OUTLET,
+        supported_ext=None,
+    ),
     10: EzvizSwitchEntityDescription(
         key="10",
         translation_key="infrared_light",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 
+from pyezvizapi.constants import DeviceCatagories
 from pyezvizapi.exceptions import HTTPError, InvalidHost, PyEzvizError
 
 from homeassistant.components import ffmpeg
@@ -45,6 +46,10 @@ async def async_setup_entry(
     camera_entities = []
 
     for camera, value in coordinator.data.items():
+        # Skip non-camera devices like smart plugs
+        if value.get("device_category") == DeviceCatagories.COMMON_DEVICE_CATEGORY.value:
+            continue
+
         camera_rtsp_entry = [
             item
             for item in hass.config_entries.async_entries(DOMAIN)
